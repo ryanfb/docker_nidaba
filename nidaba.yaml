@@ -1,0 +1,47 @@
+# The home directory for Iris to store files created by OCR jobs. For example,
+# tifs, jp2s, meta.xml, and abbyy file downloaded from archive.org are stored
+# here. Each new job is automatically placed in a uniquely named directory.
+storage_path: ~/OCR
+
+# URL to the redis database. May be shared with celery.
+redis_url: 'redis://redis:6379'
+
+# Spell check configuration. Dictionaries are kept on the common medium (i.e.
+# at STORAGE_PATH/tuple[0]/tuple[1]). Each spell checker requires a list of
+# valid words ('dictionary') and a dictionary containing all variants of words
+# attained by deletion of single characters (see nidaba.lex.make_deldict).
+lang_dicts:
+  polytonic_greek: {dictionary: [dicts, greek.dic], 
+                    deletion_dictionary: [dicts, del_greek.dic]}
+  latin: {dictionary: [dicts, latin.dic], 
+                    deletion_dictionary: [dicts, del_latin.dic]}
+
+# Ocropus/kraken models
+ocropus_models:
+  greek: [models, greek.pyrnn.gz]
+  atlantean: [models, atlantean.pyrnn.gz]
+  fraktur: [models, fraktur.pyrnn.gz]
+  fancy_ligatures: [models, ligatures.pyrnn.gz]
+
+# Models solely working with kraken (i.e. models in pronn format or CLSTM
+# models).
+kraken_models:
+  default: [models, en-default.pronn]
+  fraktur_clstm: [models, fraktur.clstm]
+
+# List of plugins to load. Additional fields in the associative array will be
+# handed over to the setup function of the plugin.  Be aware that plugins
+# utilizing external components that aren't installed will cause nidaba to
+# abort. 
+plugins_load:
+  tesseract: {implementation: capi, # set to either legacy (hOCR
+                                              # output in an *.html file),
+                                              # direct (hOCR output in an
+                                              # *.hocr file), or capi
+                                              # (tesseract version >= 3.02)
+             tessdata: /usr/share/tesseract-ocr} # location of the tessdata
+                                                 # path. May also be a storage
+                                                 # tuple.
+  #ocropus: {}
+  kraken: {}
+  leptonica: {}
