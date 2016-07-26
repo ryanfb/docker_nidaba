@@ -20,4 +20,6 @@ RUN python setup.py nosetests
 RUN pip install kraken
 RUN nidaba plugins
 
-CMD ["nidaba","worker"]
+EXPOSE 8080
+COPY startup.sh /nidaba/startup.sh
+CMD ["sh","/nidaba/startup.sh"]

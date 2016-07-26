@@ -1,7 +1,7 @@
 # The home directory for Iris to store files created by OCR jobs. For example,
 # tifs, jp2s, meta.xml, and abbyy file downloaded from archive.org are stored
 # here. Each new job is automatically placed in a uniquely named directory.
-storage_path: ~/OCR
+storage_path: /tmp
 
 # URL to the redis database. May be shared with celery.
 redis_url: 'redis://redis:6379'
